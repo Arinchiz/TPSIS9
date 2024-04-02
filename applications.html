@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Заявки</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body id="page-top">
+
+<div id="wrapper">
+    <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-dark p-0 navbar-dark"
+         th:insert="blocks/navLeft :: nav"></nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks/navTop :: nav"></div>
+            <div class="container-fluid">
+
+                <h3 class="text-dark mb-4">Заявки</h3>
+
+                <div class="card shadow mb-3">
+                    <div class="card-header">
+                        <h6 class="text-dark fw-bold m-0">Ожидание</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div th:if="${i.status.name() == 'WAITING'}" th:each="i : ${applications}" class="col-4 mb-2">
+                                <div class="row">
+                                    <div class="col-4 mb-2 text-center">
+                                        <a th:href="${'/automobiles/' + i.automobile.id}">
+                                            <img th:src="${'/img/' + i.automobile.photo}" class="rounded-3 shadow"
+                                                 style="max-height: 250px;max-width: 100%">
+                                        </a>
+                                    </div>
+                                    <div class="col-8 mb-2">
+                                        <p class="lead mb-1" th:text="${i.automobile.name}"></p>
+                                        <p class="mb-1" th:text="${'Цена: ' + i.price}"></p>
+                                        <p class="mb-1" th:text="${'Модель: ' + i.automobile.carModel.name}"></p>
+                                        <p class="mb-1" th:text="${'Тип двигателя: ' + i.automobile.engineType.name}"></p>
+                                        <p class="mb-1" th:text="${'Страна производства: ' + i.automobile.origin}"></p>
+                                    </div>
+                                    <div th:if="${i.automobile.count > 0 and role == 'ADMIN'}" class="col-auto">
+                                        <a th:href="${'/applications/' + i.id + '/done'}" class="btn btn-dark">Подтвердить</a>
+                                    </div>
+                                    <div th:if="${role == 'ADMIN'}" class="col-auto">
+                                        <a th:href="${'/applications/' + i.id + '/reject'}" class="btn btn-warning">Отказать</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-3">
+                    <div class="card-header">
+                        <h6 class="text-dark fw-bold m-0">Подтверждено</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div th:if="${i.status.name() == 'DONE'}" th:each="i : ${applications}" class="col-4 mb-2">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <a th:href="${'/automobiles/' + i.automobile.id}">
+                                            <img th:src="${'/img/' + i.automobile.photo}" class="rounded-3 shadow"
+                                                 style="max-height: 250px;max-width: 100%">
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <p class="lead mb-1" th:text="${i.automobile.name}"></p>
+                                        <p class="mb-1" th:text="${'Цена: ' + i.price}"></p>
+                                        <p class="mb-1" th:text="${'Модель: ' + i.automobile.carModel.name}"></p>
+                                        <p class="mb-1" th:text="${'Тип двигателя: ' + i.automobile.engineType.name}"></p>
+                                        <p class="mb-1" th:text="${'Страна производства: ' + i.automobile.origin}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-3">
+                    <div class="card-header">
+                        <h6 class="text-dark fw-bold m-0">Отказано</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div th:if="${i.status.name() == 'REJECT'}" th:each="i : ${applications}" class="col-4 mb-2">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <a th:href="${'/automobiles/' + i.automobile.id}">
+                                            <img th:src="${'/img/' + i.automobile.photo}" class="rounded-3 shadow"
+                                                 style="max-height: 250px;max-width: 100%">
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <p class="lead mb-1" th:text="${i.automobile.name}"></p>
+                                        <p class="mb-1" th:text="${'Цена: ' + i.price}"></p>
+                                        <p class="mb-1" th:text="${'Модель: ' + i.automobile.carModel.name}"></p>
+                                        <p class="mb-1" th:text="${'Тип двигателя: ' + i.automobile.engineType.name}"></p>
+                                        <p class="mb-1" th:text="${'Страна производства: ' + i.automobile.origin}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

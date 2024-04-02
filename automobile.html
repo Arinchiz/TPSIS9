@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${automobile.name}"></title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body id="page-top">
+
+<div id="wrapper">
+    <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-dark p-0 navbar-dark"
+         th:insert="blocks/navLeft :: nav"></nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks/navTop :: nav"></div>
+            <div class="container-fluid">
+
+                <h3 class="text-dark mb-4" th:text="${automobile.name}"></h3>
+
+
+                <div class="card shadow mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <img class="rounded-5 shadow" th:src="${'/img/' + automobile.photo}"
+                                     style="max-height: 400px;max-width: 100%">
+                            </div>
+                            <div class="col">
+                                <div th:if="${role == 'ADMIN'}" class="row mb-3">
+                                    <div class="col-auto">
+                                        <a th:href="${'/automobiles/' + automobile.id + '/edit'}"
+                                           class="btn btn-dark">Обновить</a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a th:href="${'/automobiles/' + automobile.id + '/delete'}"
+                                           class="btn btn-danger">Удалить</a>
+                                    </div>
+                                </div>
+                                <div th:if="${role == 'USER'}" class="row mb-3">
+                                    <div class="col-auto">
+                                        <a th:href="${'/automobiles/' + automobile.id + '/application'}"
+                                           class="btn btn-dark">Оформить</a>
+                                    </div>
+                                </div>
+                                <p class="lead mb-1" th:text="${'Цена: ' + automobile.price}"></p>
+                                <p class="lead mb-1" th:text="${'Модель: ' + automobile.carModel.name}"></p>
+                                <p class="lead mb-1" th:text="${'Тип двигателя: ' + automobile.engineType.name}"></p>
+                                <p class="lead mb-1" th:text="${'Страна производства: ' + automobile.origin}"></p>
+                                <p class="lead mb-1" th:text="${'Количество: ' + automobile.count}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

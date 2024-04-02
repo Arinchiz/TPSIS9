@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Автомобили</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body id="page-top">
+
+<div id="wrapper">
+    <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-dark p-0 navbar-dark"
+         th:insert="blocks/navLeft :: nav"></nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks/navTop :: nav"></div>
+            <div class="container-fluid">
+
+                <h3 class="text-dark mb-4">Автомобили</h3>
+
+                <a th:if="${role == 'ADMIN'}" href="/automobiles/add" class="btn btn-dark w-100 mb-3">Добавить</a>
+
+                <div th:unless="${automobiles.isEmpty()}" class="card shadow mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div th:each="i : ${automobiles}" class="col-4 mb-2">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <a th:href="${'/automobiles/' + i.id}">
+                                            <img th:src="${'/img/' + i.photo}" class="rounded-3 shadow"
+                                                 style="max-height: 250px;max-width: 100%">
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <p class="lead mb-1" th:text="${i.name}"></p>
+                                        <p class="mb-1" th:text="${'Цена: ' + i.price}"></p>
+                                        <p class="mb-1" th:text="${'Модель: ' + i.carModel.name}"></p>
+                                        <p class="mb-1" th:text="${'Тип двигателя: ' + i.engineType.name}"></p>
+                                        <p class="mb-1" th:text="${'Страна производства: ' + i.origin}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

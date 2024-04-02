@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Статистика</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body id="page-top">
+
+<div id="wrapper">
+    <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-dark p-0 navbar-dark"
+         th:insert="blocks/navLeft :: nav"></nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks/navTop :: nav"></div>
+            <div class="container-fluid">
+
+                <h3 class="text-dark mb-4">Статистика</h3>
+
+                <div class="card shadow mb-3">
+                    <div class="card-body">
+                        <button class="btn btn-dark w-100" onclick="generatePDF()">Сгенерировать PDF</button>
+                        <hr>
+                        <div id="generatePDF">
+                            <div class="row">
+                                <div class="col">
+                                    <div id="top5" style="height: 300px"></div>
+                                    <hr>
+                                    <div id="drawMod" style="height: 300px"></div>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                            <hr>
+                            <div class="text-dark">
+                                <div class="row mb-2 text-center">
+                                    <div class="col">
+                                        <span class="lead">Автомобиль</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="lead">Модель</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="lead">В автосалоне</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="lead">Продано</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="lead">Прибыль</span>
+                                    </div>
+                                </div>
+                                <div th:each="i : ${automobiles}" class="row mb-2">
+                                    <div class="col text-center">
+                                        <span th:text="${i.name}"></span>
+                                    </div>
+                                    <div class="col text-center">
+                                        <span th:text="${i.carModel.name}"></span>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span th:text="${i.count}"></span>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span th:text="${i.incomeCount}"></span>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span th:text="${i.incomePrice}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    var top5String = /*[[${top5String}]]*/ [];
+    var top5Float = /*[[${top5Float}]]*/ [];
+    var modString = /*[[${modString}]]*/ [];
+    var modFloat = /*[[${modFloat}]]*/ [];
+
+    function generatePDF() {
+        html2pdf(document.getElementById('generatePDF'));
+    }
+
+
+</script>
+<script src="/js/stats.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

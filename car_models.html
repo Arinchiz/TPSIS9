@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Модели</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body id="page-top">
+
+<div id="wrapper">
+    <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-dark p-0 navbar-dark"
+         th:insert="blocks/navLeft :: nav"></nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks/navTop :: nav"></div>
+            <div class="container-fluid">
+
+                <h3 class="text-dark mb-4">Модели</h3>
+
+                <div class="card shadow mb-3">
+                    <div class="card-header">
+                        <h6 class="text-dark fw-bold m-0">Добавить</h6>
+                    </div>
+                    <div class="card-body">
+                        <form action="/models/add" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" required class="form-control" placeholder="Наименование"
+                                           name="name">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-dark" type="submit">Добавить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div th:unless="${models.isEmpty()}" class="card shadow mb-3">
+                    <div class="card-header">
+                        <h6 class="text-dark fw-bold m-0">Изменить</h6>
+                    </div>
+                    <div class="card-body">
+                        <form th:each="i : ${models}" th:action="${'/models/' + i.id + '/edit'}" method="post" class="mb-2">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" required class="form-control" placeholder="Наименование"
+                                           name="name" th:value="${i.name}">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-dark" type="submit">Обновить</button>
+                                </div>
+                                <div class="col-auto">
+                                    <a th:href="${'/models/' + i.id + '/delete'}" class="btn btn-danger">Удалить</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>
