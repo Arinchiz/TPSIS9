@@ -21,6 +21,16 @@ public class AutomobileCont extends Main {
     public String automobiles(Model model) {
         getCurrentUserAndRole(model);
         model.addAttribute("automobiles", automobileRepo.findAll());
+        model.addAttribute("models", carModelRepo.findAll());
+        return "automobiles";
+    }
+
+    @GetMapping("/search")
+    public String search(Model model, @RequestParam Long carModelId) {
+        getCurrentUserAndRole(model);
+        model.addAttribute("automobiles", automobileRepo.findAllByCarModel_Id(carModelId));
+        model.addAttribute("models", carModelRepo.findAll());
+        model.addAttribute("carModelId", carModelId);
         return "automobiles";
     }
 
@@ -33,7 +43,7 @@ public class AutomobileCont extends Main {
 
     @GetMapping("/{id}/application")
     public String application(@PathVariable Long id) {
-        applicationRepo.save(new Application(automobileRepo.getReferenceById(id),getUser()));
+        applicationRepo.save(new Application(automobileRepo.getReferenceById(id), getUser()));
         return "redirect:/automobiles/{id}";
     }
 
